@@ -171,16 +171,13 @@ button {
   }
 }
 
-/* ------------------------------------------------------------------ karta */
+/* ------------------------------------------------------------ kalkulačka */
 
+/* Zadání stojí přímo na stránce bez rámečku, vlastní panel má jen výsledek. */
 .card {
-  background: var(--karta);
-  border: 1px solid var(--okraj);
-  border-radius: var(--radius-l);
-}
-
-.calc {
-  padding: var(--mezera-20) var(--mezera-20) var(--mezera-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--mezera-24);
 }
 
 .calc-primary {
@@ -188,12 +185,6 @@ button {
   flex-direction: column;
   gap: var(--mezera-12);
   padding-bottom: var(--mezera-8);
-}
-
-@media (min-width: 600px) {
-  .calc {
-    padding: var(--mezera-24) var(--mezera-24) var(--mezera-4);
-  }
 }
 
 /* ---------------------------------------------------------------- záložky */
@@ -558,15 +549,14 @@ button {
 
 .result {
   padding: var(--mezera-20);
-  border-top: 1px solid var(--okraj);
-  /* Karta neořezává obsah (bubliny z ní vyčnívají), proto spodní rohy tady. */
-  border-radius: 0 0 var(--radius-l) var(--radius-l);
-  background: var(--pozadi);
+  border: 1px solid var(--okraj);
+  border-radius: var(--radius-l);
+  background: var(--karta);
 }
 
 @media (min-width: 600px) {
   .result {
-    padding: var(--mezera-24);
+    padding: var(--mezera-32);
   }
 }
 
@@ -736,7 +726,7 @@ button {
   padding: var(--mezera-10) var(--mezera-12);
   border-left: 3px solid var(--zluta);
   border-radius: var(--radius-s);
-  background: var(--karta);
+  background: var(--cip);
   font-size: var(--pismo-maly);
 }
 
@@ -1272,4 +1262,69 @@ button {
 .figure-alert .figure-label,
 .figure-alert .figure-value .unit {
   color: var(--kritika);
+}
+
+/* Poslední rozbalovací sekce zadání se uzavře linkou. */
+.calc .disclosure:last-child {
+  border-bottom: 1px solid var(--okraj);
+}
+
+/* ----------------------------------------------- pruh rozdělení ceny práce */
+
+.split {
+  margin-top: var(--mezera-24);
+}
+
+.split-title {
+  margin: 0 0 var(--mezera-8);
+  font-size: var(--pismo-popisek);
+  font-weight: 600;
+  color: var(--ztlumeny);
+}
+
+.split-bar {
+  display: flex;
+  gap: var(--mezera-2);
+  height: 12px;
+  overflow: hidden;
+  border-radius: var(--radius-pilulka);
+}
+
+.split-bar span {
+  transition: width var(--dur) var(--ease);
+}
+
+.split-yours,
+.split-dot-yours {
+  background: var(--zluta);
+}
+
+.split-state,
+.split-dot-state {
+  background: var(--kritika);
+}
+
+.split-legend {
+  display: flex;
+  justify-content: space-between;
+  margin-top: var(--mezera-8);
+  font-size: var(--pismo-poznamka);
+  color: var(--text-jemny);
+}
+
+.split-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--mezera-6);
+}
+
+.split-legend strong {
+  color: var(--bila);
+  font-variant-numeric: tabular-nums;
+}
+
+.split-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
 }

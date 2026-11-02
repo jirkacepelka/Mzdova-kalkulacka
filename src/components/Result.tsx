@@ -70,6 +70,36 @@ function Figure({ label, value, size, alert, formula, substitution }: FigureProp
   );
 }
 
+/** Pruh rozdělení ceny práce: kolik dostanete vy a kolik stát. */
+function Split({ net, total }: { net: number; total: number }) {
+  if (total <= 0) return null;
+  const yours = Math.round((net / total) * 100);
+  const state = 100 - yours;
+  return (
+    <div className="split">
+      <p className="split-title">Z ceny vaší práce</p>
+      <div
+        className="split-bar"
+        role="img"
+        aria-label={`Vám zůstane ${yours} %, státu odejde ${state} %`}
+      >
+        <span className="split-yours" style={{ width: `${yours}%` }} />
+        <span className="split-state" style={{ width: `${state}%` }} />
+      </div>
+      <div className="split-legend" aria-hidden="true">
+        <span>
+          <i className="split-dot split-dot-yours" />
+          Vám <strong>{yours} %</strong>
+        </span>
+        <span>
+          <i className="split-dot split-dot-state" />
+          Státu <strong>{state} %</strong>
+        </span>
+      </div>
+    </div>
+  );
+}
+
 export function Result({ result, mode }: { result: AnnualResult; mode: Mode }) {
   const m = result.monthly;
   // Všechno, co z ceny práce nedostane zaměstnanec: pojistné obou stran a daň po bonusu.
@@ -151,6 +181,7 @@ export function Result({ result, mode }: { result: AnnualResult; mode: Mode }) {
             )}
           />
         </dl>
+        <Split net={m.net} total={m.employerCost} />
         {mode === 'z-ciste' && (
           <p className="result-sub">Potřebná hrubá mzda: {czk(m.gross)} Kč měsíčně</p>
         )}
