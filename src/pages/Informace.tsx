@@ -8,6 +8,8 @@ const LAW = {
   sp: { label: 'zákon č. 589/1992 Sb., o pojistném na sociální zabezpečení', url: 'https://www.zakonyprolidi.cz/cs/1992-589' },
   zp: { label: 'zákon č. 592/1992 Sb., o pojistném na zdravotní pojištění', url: 'https://www.zakonyprolidi.cz/cs/1992-592' },
   mzda: { label: 'nařízení vlády č. 567/2006 Sb., o minimální mzdě', url: 'https://www.zakonyprolidi.cz/cs/2006-567' },
+  csu: { label: 'ČSÚ, Průměrné mzdy – 2. čtvrtletí 2026', url: 'https://csu.gov.cz/rychle-informace/prumerne-mzdy-2-ctvrtleti-2026' },
+  cssz: { label: 'ČSSZ, údaje pro sociální zabezpečení 2026', url: 'https://www.cssz.gov.cz/web/cz/-/prehled-nejdulezitejsich-udaju-pro-socialni-zabezpeceni-v-roce-2026' },
 };
 
 type Law = keyof typeof LAW;
@@ -22,7 +24,7 @@ interface ParamRow {
 const kc = (n: number) => `${czk(n)} Kč`;
 
 /** Ukázkový výpočet z průměrné mzdy, ať příklady sedí na aktuální parametry. */
-const ex = computeNet({ gross: P.averageWage });
+const ex = computeNet({ gross: P.averageWageCsu });
 
 const GROUPS: { title: string; rows: ParamRow[] }[] = [
   {
@@ -32,9 +34,20 @@ const GROUPS: { title: string; rows: ParamRow[] }[] = [
       {
         label: 'Průměrná mzda pro účely pojistného',
         value: kc(P.averageWage),
-        note: 'Sdělení MPSV pro rok 2026. Odvozuje se z ní strop sociálního pojištění i hranice 23% daně.',
+        law: 'cssz',
+        note: 'Nařízení vlády č. 365/2025 Sb. Odvozuje se z ní strop sociálního pojištění i hranice 23% daně.',
       },
-      { label: 'Medián mezd', value: kc(P.medianWage), note: 'Jen pro tlačítko rychlé volby, do výpočtu nevstupuje.' },
+      {
+        label: 'Průměrná mzda podle ČSÚ',
+        value: kc(P.averageWageCsu),
+        law: 'csu',
+        note: '2. čtvrtletí 2026, předběžný údaj. Jen pro tlačítko rychlé volby, do výpočtu nevstupuje.',
+      },
+      {
+        label: 'Medián mezd podle ČSÚ',
+        value: kc(P.medianWage),
+        note: 'Rok 2025 – novější medián ČSÚ zatím nezveřejňuje. Jen pro tlačítko rychlé volby.',
+      },
     ],
   },
   {

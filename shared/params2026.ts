@@ -13,12 +13,21 @@ export const PARAMS_2026 = {
   /** Minimální mzda (nařízení vlády č. 567/2006 Sb., ve znění pro rok 2026). */
   minimumWage: 22_400,
   /**
-   * Průměrná mzda pro účely pojistných zákonů (sdělení MPSV pro rok 2026).
-   * Odvozuje se z ní strop SP i hranice 23% sazby daně.
+   * Průměrná mzda pro účely pojistných zákonů (nařízení vlády č. 365/2025 Sb.).
+   * Odvozuje se z ní strop SP i hranice 23% sazby daně. Není to skutečná
+   * průměrná mzda – ta je v `averageWageCsu`.
    */
   averageWage: 48_967,
-  /** Medián mezd – jen pro čip rychlé volby v UI (ČSÚ, zaokrouhleno). */
-  medianWage: 43_000,
+  /**
+   * Skutečná průměrná hrubá mzda podle ČSÚ za 2. čtvrtletí 2026 (předběžně).
+   * Jen pro čip rychlé volby a výchozí hodnotu, do výpočtu nevstupuje.
+   */
+  averageWageCsu: 51_966,
+  /**
+   * Medián mezd podle ČSÚ za rok 2025 – novější ČSÚ zatím nezveřejňuje
+   * (přechod na jednotné měsíční hlášení). Jen pro čip rychlé volby.
+   */
+  medianWage: 45_523,
 
   // ── Sociální pojištění (zákon č. 589/1992 Sb. a č. 187/2006 Sb.) ────────
 

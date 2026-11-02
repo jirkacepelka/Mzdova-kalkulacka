@@ -48,18 +48,14 @@ button {
   padding-inline: var(--mezera-24);
 }
 
-/* Mobil: úvod → kalkulačka → text. Desktop: kalkulačka vlevo, text vpravo. */
+/* Mobil: text (sbalitelný) → kalkulačka. Desktop: kalkulačka vlevo, text vpravo. */
 .layout {
   flex: 1;
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  grid-template-areas: 'intro' 'card' 'info';
+  grid-template-areas: 'info' 'card';
   gap: var(--mezera-32);
   padding-block: var(--mezera-64) var(--mezera-64);
-}
-
-.intro {
-  grid-area: intro;
 }
 
 .card {
@@ -74,8 +70,7 @@ button {
 @media (min-width: 1000px) {
   .layout {
     grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
-    grid-template-areas: 'card intro' 'card info';
-    grid-template-rows: auto 1fr;
+    grid-template-areas: 'card info';
     column-gap: var(--mezera-40);
     row-gap: var(--mezera-32);
     /* Užší než kontejner webu (1300), ať kalkulačka nepůsobí roztahaně. */
@@ -148,8 +143,87 @@ button {
   color: var(--bila);
 }
 
-.info p + .info-heading {
+.info p + .info-heading,
+.intro-lead + .info-heading {
   margin-top: var(--mezera-24);
+}
+
+/* Nadpis s křížkem, kterým jde celý text skrýt. */
+.info-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--mezera-16);
+}
+
+.info-hide {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  margin: calc(-1 * var(--mezera-6)) calc(-1 * var(--mezera-8)) 0 0;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-s);
+  background: none;
+  color: var(--ztlumeny);
+  cursor: pointer;
+  transition: background-color var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+
+.info-hide:hover {
+  background: var(--cip);
+  color: var(--bila);
+}
+
+/* Záložka pro návrat skrytého textu, přilepená k pravému okraji obrazovky. */
+.info-show {
+  position: fixed;
+  z-index: 10;
+  top: 50%;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--mezera-8);
+  padding: var(--mezera-12) var(--mezera-8);
+  border: 1px solid var(--okraj);
+  border-right: 0;
+  border-radius: var(--radius-s) 0 0 var(--radius-s);
+  background: var(--cip);
+  color: var(--text-jemny);
+  font-size: var(--pismo-popisek);
+  font-weight: 600;
+  cursor: pointer;
+  transform: translateY(-50%);
+  transition: background-color var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+
+.info-show span {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+}
+
+.info-show:hover {
+  background: var(--pole-hover);
+  color: var(--bila);
+}
+
+.info-show svg {
+  color: var(--zluta);
+}
+
+/* Bez textu stojí kalkulačka sama uprostřed. */
+.layout.layout-solo {
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas: 'card';
+}
+
+.layout-solo .card {
+  width: 100%;
+  max-width: 680px;
+  justify-self: center;
 }
 
 .info .info-note {

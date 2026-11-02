@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+import { PARAMS_2026 } from '../shared/params2026';
 import {
   computeAnnual,
   grossFromNet,
@@ -29,7 +30,7 @@ export interface CalculatorState {
 
 export const INITIAL_STATE: CalculatorState = {
   mode: 'z-hrube',
-  amount: 48_967,
+  amount: PARAMS_2026.averageWageCsu,
   children: 0,
   childrenZtpp: 0,
   declaration: true,

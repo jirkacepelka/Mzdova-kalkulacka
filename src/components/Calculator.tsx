@@ -12,7 +12,7 @@ const MODES: { value: Mode; label: string }[] = [
 const PRESETS = [
   { label: 'Minimální', value: PARAMS_2026.minimumWage },
   { label: 'Medián', value: PARAMS_2026.medianWage },
-  { label: 'Průměrná', value: PARAMS_2026.averageWage },
+  { label: 'Průměrná', value: PARAMS_2026.averageWageCsu },
 ];
 
 const DISABILITY: { value: Disability; label: string }[] = [

@@ -1,27 +1,29 @@
+import { X } from 'lucide-react';
+
 /*
- * Textový sloupec vedle kalkulačky. Obsah je zástupný – dodá ho Voluntia.
- * Úvod a zbytek jsou zvlášť, aby na mobilu mohl nadpis stát nad kalkulačkou
- * a vysvětlující text až pod ní.
+ * Textový sloupec vedle kalkulačky – nadpis, úvod i vysvětlení v jednom bloku.
+ * Jde ho celý skrýt, kalkulačka se pak přesune na střed. Obsah je zástupný,
+ * dodá ho Voluntia.
  */
 
-export function Intro() {
+export function InfoColumn({ onHide }: { onHide: () => void }) {
   return (
-    <header className="intro">
-      <h1 className="intro-title">
-        {/* Nezlomitelná mezera drží „státní kase“ pohromadě, ať nezůstane osamocené slovo. */}
-        Kolik z vaší práce skončí <span className="accent-alert">ve státní{' '}kase</span>
-      </h1>
+    <aside className="info" aria-label="Vysvětlení">
+      <div className="info-head">
+        <h1 className="intro-title">
+          {/* Nezlomitelná mezera drží „státní kase“ pohromadě, ať nezůstane osamocené slovo. */}
+          Kolik z vaší práce skončí <span className="accent-alert">ve státní{' '}kase</span>
+        </h1>
+        <button type="button" className="info-hide" onClick={onHide} aria-label="Skrýt text">
+          <X size={18} strokeWidth={2} aria-hidden="true" />
+        </button>
+      </div>
+
       <p className="intro-lead">
         Zástupný úvod: krátké vysvětlení, proč kalkulačka ukazuje i náklady zaměstnavatele a co
         všechno se z hrubé mzdy odvádí.
       </p>
-    </header>
-  );
-}
 
-export function InfoColumn() {
-  return (
-    <aside className="info" aria-label="Vysvětlení">
       <h2 className="info-heading">Co kalkulačka počítá</h2>
       <p>
         Zástupný text. Čistou mzdu podle pravidel pro rok 2026 – sociální a zdravotní pojištění,
