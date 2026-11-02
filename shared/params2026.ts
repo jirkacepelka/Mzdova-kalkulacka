@@ -29,6 +29,17 @@ export const PARAMS_2026 = {
    */
   medianWage: 45_523,
 
+  // ── Daně ze spotřeby (jen orientační odhad) ─────────────────────────────
+
+  /**
+   * Podíl nepřímých daní na výdajích domácností – VELMI HRUBÝ ODHAD.
+   * Eurostat 2025 (gov_10a_taxag, nama_10_gdp): DPH 628 837 mil. Kč + ostatní
+   * daně z výrobků (spotřební a energetické daně aj.) 128 553 mil. Kč, děleno
+   * výdaji domácností na konečnou spotřebu 3 966 818 mil. Kč ≈ 19,1 %.
+   * Do výpočtu mzdy nevstupuje, slouží jen k ilustraci daní z útraty.
+   */
+  consumptionTaxShare: 0.19,
+
   // ── Sociální pojištění (zákon č. 589/1992 Sb. a č. 187/2006 Sb.) ────────
 
   /** Důchodové pojištění placené zaměstnancem (§ 7 zák. č. 589/1992 Sb.). */

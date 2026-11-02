@@ -11,8 +11,9 @@ export function InfoColumn({ onHide }: { onHide: () => void }) {
     <aside className="info" aria-label="Vysvětlení">
       <div className="info-head">
         <h1 className="intro-title">
-          {/* Nezlomitelná mezera drží „státní kase“ pohromadě, ať nezůstane osamocené slovo. */}
-          Kolik z vaší práce skončí <span className="accent-alert">ve státní{' '}kase</span>
+          {/* Nezlomitelné mezery drží „ve státní kase“ pohromadě – celé na jednom řádku. */}
+          Kolik z vaší práce skončí{' '}
+          <span className="accent-alert">ve{' '}státní{' '}kase</span>
         </h1>
         <button type="button" className="info-hide" onClick={onHide} aria-label="Skrýt text">
           <X size={18} strokeWidth={2} aria-hidden="true" />

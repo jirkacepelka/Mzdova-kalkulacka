@@ -1,7 +1,9 @@
 import type { AnnualResult } from '../../shared/payroll';
 import { czk } from '../../shared/format';
+import { PARAMS_2026 } from '../../shared/params2026';
 import type { Mode } from '../usePayroll';
-import { Disclosure } from './controls';
+import { useState } from 'react';
+import { Disclosure, Switch } from './controls';
 import { Explain } from './Explain';
 
 /** `48 967 + 12 144 = 61 111 Kč` – dosazení do vzorce pro bublinu. */
@@ -70,21 +72,54 @@ function Figure({ label, value, size, alert, formula, substitution }: FigureProp
   );
 }
 
-/** Pruh rozdělení ceny práce: kolik dostanete vy a kolik stát. */
-function Split({ net, total }: { net: number; total: number }) {
+/**
+ * Pruh rozdělení ceny práce: kolik dostanete vy a kolik stát. S daněmi z útraty
+ * se státní část rozdělí na odvody ze mzdy a daně zaplacené v cenách nákupů.
+ */
+function Split({ net, total, spendTax }: { net: number; total: number; spendTax?: number }) {
   if (total <= 0) return null;
-  const yours = Math.round((net / total) * 100);
-  const state = 100 - yours;
+  const netPct = Math.round((net / total) * 100);
+  const levyPct = 100 - netPct;
+  const taxPct = spendTax ? Math.round((spendTax / total) * 100) : 0;
+  const yours = netPct - taxPct;
+
+  if (!spendTax) {
+    return (
+      <div className="split">
+        <p className="split-title">Z ceny vaší práce</p>
+        <div
+          className="split-bar"
+          role="img"
+          aria-label={`Vám zůstane ${yours} %, státu odejde ${levyPct} %`}
+        >
+          <span className="split-yours" style={{ width: `${yours}%` }} />
+          <span className="split-state" style={{ width: `${levyPct}%` }} />
+        </div>
+        <div className="split-legend" aria-hidden="true">
+          <span>
+            <i className="split-dot split-dot-yours" />
+            Vám <strong>{yours} %</strong>
+          </span>
+          <span>
+            <i className="split-dot split-dot-state" />
+            Státu <strong>{levyPct} %</strong>
+          </span>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="split">
-      <p className="split-title">Z ceny vaší práce</p>
+      <p className="split-title">Z ceny vaší práce včetně daní z útraty</p>
       <div
         className="split-bar"
         role="img"
-        aria-label={`Vám zůstane ${yours} %, státu odejde ${state} %`}
+        aria-label={`Vám ${yours} %, odvody ${levyPct} %, daně z útraty ${taxPct} %`}
       >
         <span className="split-yours" style={{ width: `${yours}%` }} />
-        <span className="split-state" style={{ width: `${state}%` }} />
+        <span className="split-state" style={{ width: `${levyPct}%` }} />
+        <span className="split-spend" style={{ width: `${taxPct}%` }} />
       </div>
       <div className="split-legend" aria-hidden="true">
         <span>
@@ -93,17 +128,28 @@ function Split({ net, total }: { net: number; total: number }) {
         </span>
         <span>
           <i className="split-dot split-dot-state" />
-          Státu <strong>{state} %</strong>
+          Odvody <strong>{levyPct} %</strong>
+        </span>
+        <span>
+          <i className="split-dot split-dot-spend" />
+          Daně z útraty <strong>{taxPct} %</strong>
         </span>
       </div>
     </div>
   );
 }
 
+const TAX_SHARE = PARAMS_2026.consumptionTaxShare;
+const TAX_PERCENT = Math.round(TAX_SHARE * 100);
+
 export function Result({ result, mode }: { result: AnnualResult; mode: Mode }) {
   const m = result.monthly;
+  const [withSpending, setWithSpending] = useState(true);
   // Všechno, co z ceny práce nedostane zaměstnanec: pojistné obou stran a daň po bonusu.
-  const toState = m.employerCost - m.net;
+  const levies = m.employerCost - m.net;
+  // Daně z útraty – velmi hrubý odhad: celá čistá mzda utracená, v cenách průměrný podíl daní.
+  const spendTax = withSpending ? Math.round(m.net * TAX_SHARE) : 0;
+  const toState = levies + spendTax;
 
   const employee: Row[] = [
     { label: 'Hrubá mzda', value: m.gross },
@@ -162,8 +208,24 @@ export function Result({ result, mode }: { result: AnnualResult; mode: Mode }) {
         <h2 id="vysledek" className="sr-only">
           Výsledek za měsíc
         </h2>
+        <div className="spending-switch">
+          <Switch
+            label="Započítat daně z útraty"
+            explain={
+              <>
+                <span className="explain-formula">
+                  Ukáže i DPH a spotřební daně, které zaplatíte, když výplatu utratíte. V průměru
+                  tvoří zhruba {TAX_PERCENT} % výdajů domácností (Eurostat 2025).
+                </span>
+                <span className="explain-substitution">Jen velmi hrubý odhad.</span>
+              </>
+            }
+            checked={withSpending}
+            onChange={setWithSpending}
+          />
+        </div>
 
-        <dl className="figures">
+        <dl className={`figures${withSpending ? ' figures-pair' : ''}`}>
           <Figure
             label="Celkové náklady zaměstnavatele"
             value={m.employerCost}
@@ -183,20 +245,35 @@ export function Result({ result, mode }: { result: AnnualResult; mode: Mode }) {
             value={toState}
             size="l"
             alert
-            formula="Pojištění placené zaměstnavatelem i vámi a záloha na daň po slevách, minus případný daňový bonus. Rozdíl mezi cenou vaší práce a tím, co dostanete."
+            formula={
+              withSpending
+                ? 'Pojištění placené zaměstnavatelem i vámi, záloha na daň po slevách (minus případný bonus) a odhad daní z útraty.'
+                : 'Pojištění placené zaměstnavatelem i vámi a záloha na daň po slevách, minus případný daňový bonus. Rozdíl mezi cenou vaší práce a tím, co dostanete.'
+            }
             substitution={sum(
               [
                 { value: m.socialEmployer + m.healthEmployer, sign: '+' },
                 { value: m.socialEmployee + m.healthEmployee, sign: '+' },
                 { value: m.taxAdvance, sign: '+' },
                 { value: m.childBonus, sign: '−' },
+                { value: spendTax, sign: '+' },
               ],
               toState,
             )}
           />
           {third}
+          {withSpending && (
+            <Figure
+              label="Daně z útraty"
+              value={spendTax}
+              size="m"
+              alert
+              formula={`Velmi hrubý odhad DPH a spotřebních daní, které zaplatíte v cenách, když utratíte celou čistou mzdu. V průměru tvoří zhruba ${TAX_PERCENT} % výdajů domácností (Eurostat 2025).`}
+              substitution={`${czk(m.net)} × ${TAX_PERCENT} % = ${czk(spendTax)} Kč`}
+            />
+          )}
         </dl>
-        <Split net={m.net} total={m.employerCost} />
+        <Split net={m.net} total={m.employerCost} spendTax={spendTax} />
 
         {m.warnings.noDeclaration && (
           <p className="notice">Bez podepsaného prohlášení se neuplatní žádné slevy na dani.</p>

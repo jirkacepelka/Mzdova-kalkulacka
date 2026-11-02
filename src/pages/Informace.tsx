@@ -8,6 +8,7 @@ const LAW = {
   sp: { label: 'zákon č. 589/1992 Sb., o pojistném na sociální zabezpečení', url: 'https://www.zakonyprolidi.cz/cs/1992-589' },
   zp: { label: 'zákon č. 592/1992 Sb., o pojistném na zdravotní pojištění', url: 'https://www.zakonyprolidi.cz/cs/1992-592' },
   mzda: { label: 'nařízení vlády č. 567/2006 Sb., o minimální mzdě', url: 'https://www.zakonyprolidi.cz/cs/2006-567' },
+  eurostat: { label: 'Eurostat, daně z výrobků a spotřeba domácností 2025', url: 'https://ec.europa.eu/eurostat/databrowser/view/gov_10a_taxag/default/table' },
   csu: { label: 'ČSÚ, Průměrné mzdy – 2. čtvrtletí 2026', url: 'https://csu.gov.cz/rychle-informace/prumerne-mzdy-2-ctvrtleti-2026' },
   cssz: { label: 'ČSSZ, údaje pro sociální zabezpečení 2026', url: 'https://www.cssz.gov.cz/web/cz/-/prehled-nejdulezitejsich-udaju-pro-socialni-zabezpeceni-v-roce-2026' },
 };
@@ -138,6 +139,17 @@ const GROUPS: { title: string; rows: ParamRow[] }[] = [
       },
     ],
   },
+  {
+    title: 'Daně z útraty (velmi hrubý odhad)',
+    rows: [
+      {
+        label: 'Podíl nepřímých daní na výdajích domácností',
+        value: `zhruba ${percent(P.consumptionTaxShare, 0)}`,
+        law: 'eurostat',
+        note: 'DPH 628,8 mld. Kč a ostatní daně z výrobků 128,6 mld. Kč děleno výdaji domácností na spotřebu 3 966,8 mld. Kč (2025). Do výpočtu mzdy nevstupuje.',
+      },
+    ],
+  },
 ];
 
 export function Informace() {
@@ -257,6 +269,23 @@ export function Informace() {
               Slevu na manžela nebo manželku a odpočty (penzijní spoření, životní pojištění, úroky z
               hypotéky, dary) lze uplatnit jen jednou za rok. Kalkulačka spočítá roční daň s nimi a
               bez nich a rozdíl ukáže jako odhad vratky. Měsíční čistou mzdu nemění.
+            </p>
+
+            <h3>7. Daně z útraty – velmi hrubý odhad</h3>
+            <p>
+              Stát nebere jen ze mzdy, ale i z toho, za co ji utratíte – DPH, spotřební daně z
+              paliv, alkoholu a tabáku, energetické daně a další. Podle dat Eurostatu za rok 2025
+              tvoří tyto daně zhruba <strong>{percent(P.consumptionTaxShare, 0)} výdajů domácností</strong>.
+            </p>
+            <p className="doc-formula">
+              {kc(ex.net)} × {percent(P.consumptionTaxShare, 0)} ={' '}
+              <strong>{kc(Math.round(ex.net * P.consumptionTaxShare))}</strong> daní z útraty měsíčně
+            </p>
+            <p>
+              <strong>Jde o velmi hrubý odhad.</strong> Předpokládá, že utratíte celou čistou mzdu
+              a nakupujete jako průměrná domácnost. Kdo spoří, platí méně; kdo hodně tankuje, kouří
+              nebo pije, výrazně víc. Ve skutečnosti se na úhradě DPH podílí i stát a firmy, takže
+              průměrný podíl je jen přibližný.
             </p>
           </section>
 

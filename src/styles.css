@@ -1388,7 +1388,9 @@ button {
 
 .split-legend {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
+  gap: var(--mezera-4) var(--mezera-12);
   margin-top: var(--mezera-8);
   font-size: var(--pismo-poznamka);
   color: var(--text-jemny);
@@ -1455,4 +1457,24 @@ button {
   border-top: 2px dashed var(--uctenka-linka);
   border-radius: 0;
   background: none;
+}
+
+/* ------------------------------------------------------- daně z útraty */
+
+/* Přepínač daní z útraty nahoře v účtence, oddělený čárou od čísel. */
+.spending-switch {
+  margin: calc(-1 * var(--mezera-8)) 0 var(--mezera-16);
+  border-bottom: 2px dashed var(--uctenka-linka, var(--okraj));
+}
+
+/* S daněmi z útraty stojí vedle čisté mzdy druhé menší číslo. */
+@media (min-width: 600px) {
+  .figures-pair .figure-m {
+    grid-column: auto;
+  }
+}
+
+.split-spend,
+.split-dot-spend {
+  background: color-mix(in srgb, var(--kritika) 55%, var(--karta));
 }
