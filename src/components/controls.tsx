@@ -12,6 +12,8 @@ interface AmountInputProps {
   help?: ReactNode;
   /** Obsah bubliny u otazníku vedle popisku. */
   explain?: ReactNode;
+  /** Ovládání na řádku popisku, zarovnané doprava (přepínač směru výpočtu). */
+  aside?: ReactNode;
   size?: 'l' | 'm';
 }
 
@@ -19,7 +21,15 @@ interface AmountInputProps {
  * Číslo s oddělovačem tisíců už při psaní. Kurzor se po přeformátování
  * vrací za stejný počet číslic, jinak by po každé mezeře uskočil na konec.
  */
-export function AmountInput({ label, value, onChange, help, explain, size = 'm' }: AmountInputProps) {
+export function AmountInput({
+  label,
+  value,
+  onChange,
+  help,
+  explain,
+  aside,
+  size = 'm',
+}: AmountInputProps) {
   const id = useId();
   const ref = useRef<HTMLInputElement>(null);
 
@@ -46,9 +56,12 @@ export function AmountInput({ label, value, onChange, help, explain, size = 'm' 
 
   return (
     <div className={`amount amount-${size}`}>
-      <div className="field-label">
-        <label htmlFor={id}>{label}</label>
-        {explain && <Explain label={`Co znamená: ${label}`}>{explain}</Explain>}
+      <div className="field-head">
+        <div className="field-label">
+          <label htmlFor={id}>{label}</label>
+          {explain && <Explain label={`Co znamená: ${label}`}>{explain}</Explain>}
+        </div>
+        {aside}
       </div>
       <div className="amount-box">
         <input

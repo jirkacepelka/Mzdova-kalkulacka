@@ -49,25 +49,26 @@ export function Calculator({ state, onChange }: CalculatorProps) {
 
   return (
     <form className="calc" onSubmit={(e) => e.preventDefault()} aria-label="Zadání výpočtu">
-      <div className="tabs" role="tablist" aria-label="Směr výpočtu">
-        {MODES.map((m) => (
-          <button
-            key={m.value}
-            type="button"
-            role="tab"
-            aria-selected={state.mode === m.value}
-            className="tab"
-            onClick={() => onChange({ mode: m.value })}
-          >
-            {m.label}
-          </button>
-        ))}
-      </div>
-
       <div className="calc-primary">
         <AmountInput
           size="l"
           label={fromGross ? 'Hrubá mzda za měsíc' : 'Požadovaná čistá mzda za měsíc'}
+          aside={
+            <div className="tabs" role="tablist" aria-label="Směr výpočtu">
+              {MODES.map((m) => (
+                <button
+                  key={m.value}
+                  type="button"
+                  role="tab"
+                  aria-selected={state.mode === m.value}
+                  className="tab"
+                  onClick={() => onChange({ mode: m.value })}
+                >
+                  {m.label}
+                </button>
+              ))}
+            </div>
+          }
           value={state.amount}
           onChange={(amount) => onChange({ amount })}
         />

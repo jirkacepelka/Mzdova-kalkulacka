@@ -192,7 +192,26 @@ button {
 .tabs {
   display: flex;
   gap: var(--mezera-8);
-  margin-bottom: var(--mezera-16);
+}
+
+/* Popisek pole vlevo, přepínač směru výpočtu vpravo na stejném řádku. */
+.field-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--mezera-8) var(--mezera-16);
+  margin-bottom: var(--mezera-8);
+}
+
+.field-head .field-label {
+  margin-bottom: 0;
+}
+
+@media (max-width: 599px) {
+  .field-head .tabs {
+    width: 100%;
+  }
 }
 
 .tab {
@@ -290,7 +309,7 @@ button {
 }
 
 .amount-l .field-label {
-  font-size: var(--pismo-text);
+  font-size: var(--pismo-lead);
   font-weight: 700;
   color: var(--bila);
 }
