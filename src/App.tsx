@@ -34,7 +34,7 @@ export function App() {
       <main className="container layout">
         <Intro />
         <div className="card">
-          <Calculator state={state} onChange={update} />
+          <Calculator state={state} onChange={update} refund={result.refund} />
           <Result result={result} mode={state.mode} />
         </div>
         <InfoColumn />

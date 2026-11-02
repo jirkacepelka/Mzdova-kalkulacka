@@ -1,4 +1,5 @@
 import type { Disability } from '../../shared/payroll';
+import { czk } from '../../shared/format';
 import { PARAMS_2026 } from '../../shared/params2026';
 import type { CalculatorState, Mode } from '../usePayroll';
 import { AmountInput, Disclosure, PresetChips, Segmented, Stepper, Switch } from './controls';
@@ -23,6 +24,8 @@ const DISABILITY: { value: Disability; label: string }[] = [
 interface CalculatorProps {
   state: CalculatorState;
   onChange: (patch: Partial<CalculatorState>) => void;
+  /** Odhad vratky z ročního zúčtování – ukazuje se v jeho sekci, ne na účtence. */
+  refund: number;
 }
 
 /** Počet zapnutých voleb do hlavičky sbalené sekce, ať je vidět, že něco platí. */
@@ -33,7 +36,7 @@ function activeLabel(count: number) {
   return `${count} zapnutých`;
 }
 
-export function Calculator({ state, onChange }: CalculatorProps) {
+export function Calculator({ state, onChange, refund }: CalculatorProps) {
   const fromGross = state.mode === 'z-hrube';
 
   const extraCount =
@@ -52,7 +55,7 @@ export function Calculator({ state, onChange }: CalculatorProps) {
       <div className="calc-primary">
         <AmountInput
           size="l"
-          label={fromGross ? 'Hrubá mzda za měsíc' : 'Požadovaná čistá mzda za měsíc'}
+          label={fromGross ? 'Hrubá mzda za měsíc' : 'Čistá mzda za měsíc'}
           aside={
             <div className="tabs" role="tablist" aria-label="Směr výpočtu">
               {MODES.map((m) => (
@@ -211,6 +214,11 @@ export function Calculator({ state, onChange }: CalculatorProps) {
             onChange={(donations) => onChange({ donations })}
           />
         </div>
+        {refund > 0 && (
+          <p className="annual-refund">
+            Odhad vratky za rok <strong>{czk(refund)} Kč</strong>
+          </p>
+        )}
       </Disclosure>
     </form>
   );

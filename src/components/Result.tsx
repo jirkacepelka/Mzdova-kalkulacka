@@ -127,12 +127,42 @@ export function Result({ result, mode }: { result: AnnualResult; mode: Mode }) {
     { label: 'Zdravotní pojištění 9 %', value: m.healthEmployer, sign: '+' },
   ];
 
+  // Ve výpočtu z čisté je čistá mzda zadaná, třetím číslem je proto hrubá.
+  const third =
+    mode === 'z-hrube' ? (
+      <Figure
+        label="Čistá mzda"
+        value={m.net}
+        size="m"
+        formula="Hrubá mzda minus sociální a zdravotní pojištění a záloha na daň, plus případný daňový bonus na děti."
+        substitution={sum(
+          [
+            { value: m.gross, sign: '+' },
+            { value: m.socialEmployee, sign: '−' },
+            { value: m.healthEmployee, sign: '−' },
+            { value: m.taxAdvance, sign: '−' },
+            { value: m.childBonus, sign: '+' },
+          ],
+          m.net,
+        )}
+      />
+    ) : (
+      <Figure
+        label="Potřebná hrubá mzda"
+        value={m.gross}
+        size="m"
+        formula="Nejnižší hrubá mzda v celých korunách, ze které po odečtení pojištění a daně vyjde zadaná čistá mzda."
+        substitution={`Čistá mzda z ní: ${czk(m.net)} Kč`}
+      />
+    );
+
   return (
-    <section className="result" aria-labelledby="vysledek" aria-live="polite">
+    <section className="result receipt" aria-labelledby="vysledek" aria-live="polite">
       <div className="result-inner">
-        <h2 id="vysledek" className="result-period">
-          Měsíčně
+        <h2 id="vysledek" className="sr-only">
+          Výsledek za měsíc
         </h2>
+
         <dl className="figures">
           <Figure
             label="Celkové náklady zaměstnavatele"
@@ -164,27 +194,9 @@ export function Result({ result, mode }: { result: AnnualResult; mode: Mode }) {
               toState,
             )}
           />
-          <Figure
-            label="Čistá mzda"
-            value={m.net}
-            size="m"
-            formula="Hrubá mzda minus sociální a zdravotní pojištění a záloha na daň, plus případný daňový bonus na děti."
-            substitution={sum(
-              [
-                { value: m.gross, sign: '+' },
-                { value: m.socialEmployee, sign: '−' },
-                { value: m.healthEmployee, sign: '−' },
-                { value: m.taxAdvance, sign: '−' },
-                { value: m.childBonus, sign: '+' },
-              ],
-              m.net,
-            )}
-          />
+          {third}
         </dl>
         <Split net={m.net} total={m.employerCost} />
-        {mode === 'z-ciste' && (
-          <p className="result-sub">Potřebná hrubá mzda: {czk(m.gross)} Kč měsíčně</p>
-        )}
 
         {m.warnings.noDeclaration && (
           <p className="notice">Bez podepsaného prohlášení se neuplatní žádné slevy na dani.</p>
@@ -199,13 +211,6 @@ export function Result({ result, mode }: { result: AnnualResult; mode: Mode }) {
           <p className="notice">
             Na daňový bonus máte nárok až od příjmu 11 200 Kč měsíčně, proto se nevyplatí.
           </p>
-        )}
-
-        {result.refund > 0 && (
-          <div className="refund">
-            <span>Odhad vratky v ročním zúčtování (jednou za rok)</span>
-            <strong>{czk(result.refund)} Kč</strong>
-          </div>
         )}
 
         <Disclosure title="Rozpis výpočtu za měsíc">

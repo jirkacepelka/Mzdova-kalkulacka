@@ -565,6 +565,28 @@ button {
   padding-top: var(--mezera-12);
 }
 
+.annual-refund {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--mezera-16);
+  margin: var(--mezera-16) 0 0;
+  padding: var(--mezera-12) var(--mezera-16);
+  border-left: 3px solid var(--zluta);
+  border-radius: var(--radius-s);
+  background: var(--karta);
+  font-size: var(--pismo-maly);
+  font-weight: 600;
+}
+
+.annual-refund strong {
+  color: var(--zluta);
+  font-size: var(--pismo-lead);
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
 /* --------------------------------------------------------------- výsledek */
 
 .result {
@@ -590,19 +612,6 @@ button {
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border: 0;
-}
-
-/* Štítek období nad čísly – všechny tři jsou za jeden měsíc. */
-.result-period {
-  display: inline-flex;
-  align-items: center;
-  margin: 0 0 var(--mezera-16);
-  padding: var(--mezera-4) var(--mezera-10);
-  border-radius: var(--radius-pilulka);
-  background: var(--zluta-jemna);
-  color: var(--zluta);
-  font-size: var(--pismo-stitek);
-  font-weight: 600;
 }
 
 /* Dvě hlavní čísla velká vedle sebe, čistá mzda menší pod nimi. */
@@ -757,27 +766,6 @@ button {
 
 .row-total dd {
   font-weight: 800;
-}
-
-.refund {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: var(--mezera-16);
-  margin-top: var(--mezera-16);
-  padding: var(--mezera-12) var(--mezera-16);
-  border: 1px solid var(--zluta-linka);
-  border-radius: var(--radius-m);
-  background: var(--zluta-jemna);
-  font-weight: 600;
-}
-
-.refund strong {
-  color: var(--zluta);
-  font-size: var(--pismo-lead);
-  font-weight: 800;
-  font-variant-numeric: tabular-nums;
-  white-space: nowrap;
 }
 
 /* ---------------------------------------------------------------- patička */
@@ -1347,4 +1335,50 @@ button {
   width: 8px;
   height: 8px;
   border-radius: 50%;
+}
+
+/* --------------------------------------------------------------- účtenka */
+
+/* Výsledek tvarem jako účtenka – ve stylu webu, jen zoubkovaný okraj nahoře
+   i dole, hlavička a přerušované čáry mezi oddíly. Zoubky vykusují
+   pseudoprvky v barvě pozadí stránky, takže bubliny s výkladem nic neořezává. */
+.receipt {
+  --uctenka-linka: color-mix(in srgb, var(--bila) 18%, transparent);
+  position: relative;
+  margin-block: var(--mezera-8);
+  border: 0;
+  border-radius: 0;
+}
+
+.receipt::before,
+.receipt::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 8px;
+  background: radial-gradient(circle at 8px 50%, var(--pozadi) 5px, transparent 5.5px) 0 0 / 16px
+    8px repeat-x;
+}
+
+.receipt::before {
+  top: -4px;
+}
+
+.receipt::after {
+  bottom: -4px;
+}
+
+.receipt .figure-m,
+.receipt .disclosure {
+  border-top: 2px dashed var(--uctenka-linka);
+}
+
+.receipt .row-total {
+  margin-top: var(--mezera-6);
+  padding-inline: 0;
+  border-left: 0;
+  border-top: 2px dashed var(--uctenka-linka);
+  border-radius: 0;
+  background: none;
 }
