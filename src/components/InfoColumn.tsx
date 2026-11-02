@@ -1,0 +1,41 @@
+/*
+ * Textový sloupec vedle kalkulačky. Obsah je zástupný – dodá ho Voluntia.
+ * Úvod a zbytek jsou zvlášť, aby na mobilu mohl nadpis stát nad kalkulačkou
+ * a vysvětlující text až pod ní.
+ */
+
+export function Intro() {
+  return (
+    <header className="intro">
+      <h1 className="intro-title">
+        {/* Nezlomitelná mezera drží „státní kase“ pohromadě, ať nezůstane osamocené slovo. */}
+        Kolik z vaší práce skončí <span className="accent-alert">ve státní{' '}kase</span>
+      </h1>
+      <p className="intro-lead">
+        Zástupný úvod: krátké vysvětlení, proč kalkulačka ukazuje i náklady zaměstnavatele a co
+        všechno se z hrubé mzdy odvádí.
+      </p>
+    </header>
+  );
+}
+
+export function InfoColumn() {
+  return (
+    <aside className="info" aria-label="Vysvětlení">
+      <h2 className="info-heading">Co kalkulačka počítá</h2>
+      <p>
+        Zástupný text. Čistou mzdu podle pravidel pro rok 2026 – sociální a zdravotní pojištění,
+        zálohu na daň, slevy na dani a daňový bonus na děti.
+      </p>
+
+      <h2 className="info-heading">Proč na tom záleží</h2>
+      <p>Zástupný text. Prostor pro argumentaci Voluntie, odkazy na program nebo výzvu k akci.</p>
+
+      <p className="info-note">
+        Výpočet je orientační a předpokládá stejnou mzdu po celý rok. Nezohledňuje srážkovou daň,
+        dohody o provedení práce ani zvláštní případy. Podrobnosti najdete v sekci{' '}
+        <a href="/informace">Informace a metodika</a>.
+      </p>
+    </aside>
+  );
+}

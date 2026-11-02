@@ -1,0 +1,107 @@
+/* ==========================================================================
+   Voluntia – design tokeny (zdroj: Penpot „Voluntia – UI Design System“)
+   Jediný zdroj hodnot pro web, IS, rozcestník, Konkláve i Státní dluh.
+   Neupravuj v projektech ručně; změň v Penpotu a sem opiš.
+   ========================================================================== */
+:root {
+  /* Barvy */
+  --zluta: #fed801;
+  --zluta-hover: #ffe64d;
+  --zluta-jemna: rgba(254, 216, 1, 0.1);
+  --zluta-linka: rgba(254, 216, 1, 0.4);
+  --cerna: #000000;
+  --bila: #ffffff;
+  --pozadi: #121212;
+  --karta: #1c1c1c;
+  --cip: #232323;
+  --pole: #2a2a2a;
+  --pole-hover: #333333;
+  --okraj: #2c2c2c;
+  --text-jemny: #e4e4e4;
+  --ztlumeny: #a0a0a0;
+  --tlumeny: #717171;
+  --chyba: #ff5a67;
+  --chyba-jemna: rgba(255, 90, 103, 0.12);
+  --kritika: #ff3b30; /* jen kritické posty na grafikách */
+  --uspech: #35d07f;
+  --znacka-seda: #3a3a3a; /* „Značka šedá“ z Penpotu – velká značka v patičce */
+
+  /* Stavy IS (vždy spolu s textem) */
+  --stav-info: #4da3ff;
+  --stav-varovani: #ff9f43;
+  --stav-fialova: #b06bff;
+  --stav-ruzova: #e06bc8;
+  --stav-mint: #7be0c0;
+  --stav-cervena-svetla: #ff7a8a;
+
+  /* Tvary */
+  --radius-xs: 4px;
+  --radius-s: 8px;
+  --radius-m: 12px;
+  --radius-l: 16px;
+  --radius-pilulka: 999px;
+
+  /* Mezery */
+  --mezera-2: 2px;
+  --mezera-4: 4px;
+  --mezera-6: 6px;
+  --mezera-8: 8px;
+  --mezera-10: 10px;
+  --mezera-12: 12px;
+  --mezera-16: 16px;
+  --mezera-20: 20px;
+  --mezera-24: 24px;
+  --mezera-32: 32px;
+  --mezera-40: 40px;
+  --mezera-48: 48px;
+  --mezera-64: 64px;
+
+  /* Písmo */
+  --font: 'Inter Variable', 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --pismo-hero: 60px;
+  --pismo-h1: 40px;
+  --pismo-h2: 30px;
+  --pismo-h3: 26px;
+  --pismo-nazev: 22px;
+  --pismo-lead: 18px;
+  --pismo-text: 16px;
+  --pismo-maly: 15px;
+  --pismo-poznamka: 14px;
+  --pismo-popisek: 13px;
+  --pismo-stitek: 12px;
+
+  /* Výšky ovládacích prvků */
+  --vyska-tlacitko-s: 30px;
+  --vyska-tlacitko-m: 36px;
+  --vyska-tlacitko-l: 44px;
+  --vyska-tlacitko-web: 48px;
+  --vyska-pole: 38px;
+  --vyska-zalozka: 34px;
+  --vyska-radek-odkazu: 60px;
+
+  /* Pohyb */
+  --ease: cubic-bezier(0.25, 0.1, 0.25, 1);
+  --dur: 200ms;
+  --ease-app: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --dur-app: 160ms;
+
+  /* Rozvržení */
+  --kontejner: 1300px;
+  --kontejner-uzky: 560px;
+  --kontejner-ovladani: 1640px;
+}
+
+:where(a, button, input, textarea, select, summary, [tabindex]):focus-visible {
+  outline: 2px solid var(--zluta);
+  outline-offset: 2px;
+  border-radius: var(--radius-xs);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition-duration: 0.01ms !important;
+  }
+}
