@@ -55,7 +55,7 @@ button {
   grid-template-columns: minmax(0, 1fr);
   grid-template-areas: 'intro' 'card' 'info';
   gap: var(--mezera-32);
-  padding-block: var(--mezera-32) var(--mezera-48);
+  padding-block: var(--mezera-64) var(--mezera-64);
 }
 
 .intro {
@@ -78,7 +78,9 @@ button {
     grid-template-rows: auto 1fr;
     column-gap: var(--mezera-40);
     row-gap: var(--mezera-32);
-    padding-block: var(--mezera-48);
+    /* Užší než kontejner webu (1300), ať kalkulačka nepůsobí roztahaně. */
+    max-width: calc(1120px + 2 * var(--mezera-24));
+    padding-block: calc(var(--mezera-64) + var(--mezera-32));
   }
 
   /* Text vedle dlouhé kalkulačky zůstává na očích. */
@@ -95,7 +97,7 @@ button {
   }
 
   .layout {
-    padding-block: var(--mezera-32) var(--mezera-48);
+    padding-block: var(--mezera-48) var(--mezera-48);
     gap: var(--mezera-24);
   }
 }
@@ -104,7 +106,7 @@ button {
 
 .intro-title {
   margin: 0;
-  font-size: var(--pismo-h2);
+  font-size: var(--pismo-h3);
   font-weight: 800;
   line-height: 1.1;
   letter-spacing: -0.02em;
@@ -161,7 +163,7 @@ button {
 
 @media (max-width: 599px) {
   .intro-title {
-    font-size: var(--pismo-h3);
+    font-size: var(--pismo-nazev);
   }
 
   .intro-lead {
@@ -303,11 +305,11 @@ button {
 }
 
 .amount-l .amount-box {
-  height: 60px;
+  height: 50px;
 }
 
 .amount-l .amount-input {
-  font-size: var(--pismo-h2);
+  font-size: var(--pismo-nazev);
   font-weight: 800;
   letter-spacing: -0.02em;
 }
@@ -378,7 +380,7 @@ button {
   align-items: center;
   justify-content: space-between;
   gap: var(--mezera-16);
-  min-height: 48px;
+  min-height: 44px;
   padding-block: var(--mezera-4);
 }
 
@@ -502,7 +504,7 @@ button {
   display: flex;
   align-items: center;
   gap: var(--mezera-12);
-  min-height: 52px;
+  min-height: 46px;
   list-style: none;
   cursor: pointer;
 }
@@ -629,11 +631,11 @@ button {
 }
 
 .figure-l .figure-value {
-  font-size: var(--pismo-h1);
+  font-size: var(--pismo-h2);
 }
 
 .figure-m .figure-value {
-  font-size: var(--pismo-h3);
+  font-size: var(--pismo-nazev);
 }
 
 .figure-value .unit {
@@ -658,7 +660,7 @@ button {
 
 @media (max-width: 599px) {
   .figure-l .figure-value {
-    font-size: var(--pismo-h2);
+    font-size: var(--pismo-h3);
   }
 
   .figure-m .figure-value {
