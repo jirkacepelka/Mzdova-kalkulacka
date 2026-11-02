@@ -78,6 +78,34 @@ function Figure({ label, value, size, alert, formula, substitution }: FigureProp
  */
 function Split({ net, total, spendTax }: { net: number; total: number; spendTax?: number }) {
   if (total <= 0) return null;
+
+  // Daňový bonus může převýšit pojistné i daň – čistá mzda je pak vyšší než cena
+  // práce a podíly z ní nedávají smysl. Pruh pak ukazuje jen rozdělení výplaty.
+  if (net >= total) {
+    const taxPct = spendTax ? Math.round((spendTax / net) * 100) : 0;
+    const yours = 100 - taxPct;
+    return (
+      <div className="split">
+        <p className="split-title">Bonus na děti je vyšší než odvody ze mzdy – stát vám doplácí {czk(net - total)} Kč</p>
+        <div className="split-bar" role="img" aria-label={`Vám ${yours} %, daně z útraty ${taxPct} %`}>
+          <span className="split-yours" style={{ width: `${yours}%` }} />
+          {taxPct > 0 && <span className="split-spend" style={{ width: `${taxPct}%` }} />}
+        </div>
+        <div className="split-legend" aria-hidden="true">
+          <span>
+            <i className="split-dot split-dot-yours" />
+            Vám <strong>{yours} %</strong> výplaty
+          </span>
+          {taxPct > 0 && (
+            <span>
+              <i className="split-dot split-dot-spend" />
+              Daně z útraty <strong>{taxPct} %</strong>
+            </span>
+          )}
+        </div>
+      </div>
+    );
+  }
   const netPct = Math.round((net / total) * 100);
   const levyPct = 100 - netPct;
   const taxPct = spendTax ? Math.round((spendTax / total) * 100) : 0;
@@ -150,6 +178,8 @@ export function Result({ result, mode }: { result: AnnualResult; mode: Mode }) {
   // Daně z útraty – velmi hrubý odhad: celá čistá mzda utracená, v cenách průměrný podíl daní.
   const spendTax = withSpending ? Math.round(m.net * TAX_SHARE) : 0;
   const toState = levies + spendTax;
+  // Při vysokém bonusu na děti stát víc vyplatí, než vybere.
+  const statePays = toState < 0;
 
   const employee: Row[] = [
     { label: 'Hrubá mzda', value: m.gross },
@@ -241,14 +271,18 @@ export function Result({ result, mode }: { result: AnnualResult; mode: Mode }) {
             )}
           />
           <Figure
-            label="Celkové odvody státu"
-            value={toState}
+            label={statePays ? 'Stát vám doplácí' : 'Celkové odvody státu'}
+            value={Math.abs(toState)}
             size="l"
-            alert
+            alert={!statePays}
             formula={
-              withSpending
-                ? 'Pojištění placené zaměstnavatelem i vámi, záloha na daň po slevách (minus případný bonus) a odhad daní z útraty.'
-                : 'Pojištění placené zaměstnavatelem i vámi a záloha na daň po slevách, minus případný daňový bonus. Rozdíl mezi cenou vaší práce a tím, co dostanete.'
+              statePays
+                ? 'Daňový bonus na děti je vyšší než pojistné, daň' +
+                  (withSpending ? ' i odhad daní z útraty' : '') +
+                  ' dohromady. Bonus nemá horní strop, rozdíl vám tedy stát doplácí.'
+                : withSpending
+                  ? 'Pojištění placené zaměstnavatelem i vámi, záloha na daň po slevách (minus případný bonus) a odhad daní z útraty.'
+                  : 'Pojištění placené zaměstnavatelem i vámi a záloha na daň po slevách, minus případný daňový bonus. Rozdíl mezi cenou vaší práce a tím, co dostanete.'
             }
             substitution={sum(
               [
