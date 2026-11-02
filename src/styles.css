@@ -309,8 +309,9 @@ button {
 }
 
 .amount-l .field-label {
-  font-size: var(--pismo-lead);
-  font-weight: 700;
+  font-size: var(--pismo-nazev);
+  font-weight: 800;
+  letter-spacing: -0.02em;
   color: var(--bila);
 }
 
