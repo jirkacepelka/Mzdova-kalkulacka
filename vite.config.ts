@@ -1,34 +1,17 @@
-import { defineConfig, type Plugin } from 'vite';
+import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
-/**
- * `/informace` bez přípony i v `npm run dev`. Na Vercelu totéž zařídí
- * `cleanUrls` ve `vercel.json`.
- */
-function cleanUrls(): Plugin {
-  return {
-    name: 'clean-urls',
-    configureServer(server) {
-      server.middlewares.use((req, _res, next) => {
-        if (req.url === '/informace' || req.url?.startsWith('/informace?')) {
-          req.url = req.url.replace('/informace', '/informace.html');
-        }
-        next();
-      });
-    },
-  };
-}
-
 export default defineConfig({
-  plugins: [react(), cleanUrls()],
+  plugins: [react()],
   build: {
     outDir: 'dist',
     sourcemap: true,
     rollupOptions: {
-      // Dvě stránky: kalkulačka a informace s metodikou.
+      // Dvě stránky: kalkulačka a informace s metodikou. Metodika je jako
+      // informace/index.html, takže /informace/ funguje na jakémkoli statickém hostingu.
       input: {
         index: 'index.html',
-        informace: 'informace.html',
+        informace: 'informace/index.html',
       },
     },
   },

@@ -360,14 +360,15 @@ export function Informace() {
               prohlížeči.
             </p>
 
-            <h3>Provozní záznamy hostingu</h3>
+            <h3>Provozní záznamy serveru</h3>
+            {/* Až bude jasný poskytovatel hostingu, doplnit sem jeho název a sídlo
+                (a případné předání mimo EU) – čl. 13 odst. 1 písm. e) a f) GDPR. */}
             <p>
-              Web běží na infrastruktuře společnosti Vercel Inc. (USA). Jako u každého webu se při
-              načtení stránky předává vaše IP adresa a technické údaje o požadavku (čas, adresa
-              stránky, typ prohlížeče). Vercel je v nezbytném rozsahu zpracovává v provozních
-              záznamech, aby web mohl doručit a chránit před útoky, a uchovává je jen po dobu nutnou
-              k tomuto účelu. Tyto údaje nespojujeme s vaší osobou a nepoužíváme je k žádnému jinému
-              účelu.
+              Jako u každého webu se při načtení stránky serveru předává vaše IP adresa a technické
+              údaje o požadavku (čas, adresa stránky, typ prohlížeče). Server je v nezbytném rozsahu
+              zaznamenává v provozních záznamech, aby web mohl doručit a chránit před útoky, a
+              uchovává je jen po dobu nutnou k tomuto účelu. Tyto údaje nespojujeme s vaší osobou a
+              nepoužíváme je k žádnému jinému účelu.
             </p>
             <ul>
               <li>
@@ -382,9 +383,8 @@ export function Informace() {
                 odst. 1 písm. f) GDPR).
               </li>
               <li>
-                <strong>Zpracovatel a předání do USA:</strong> Vercel Inc. na základě smlouvy o
-                zpracování osobních údajů; předání do USA je kryto rámcem EU–USA pro ochranu údajů
-                (Data Privacy Framework, čl. 45 GDPR) a standardními smluvními doložkami.
+                <strong>Zpracovatel:</strong> poskytovatel hostingu, se kterým máme uzavřenou smlouvu
+                o zpracování osobních údajů (čl. 28 GDPR).
               </li>
               <li>
                 <strong>Vaše práva:</strong> máte právo na přístup k údajům, jejich opravu či výmaz,

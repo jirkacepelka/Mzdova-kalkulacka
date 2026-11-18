@@ -56,7 +56,7 @@ export function InfoColumn({ onHide }: { onHide: () => void }) {
       <p className="info-note">
         Výpočet je orientační a předpokládá stejnou mzdu po celý rok. Nezohledňuje srážkovou daň,
         dohody o provedení práce ani zvláštní případy. Podrobnosti najdete v sekci{' '}
-        <a href="/informace">Informace a metodika</a>.
+        <a href="/informace/">Informace a metodika</a>.
       </p>
     </aside>
   );
