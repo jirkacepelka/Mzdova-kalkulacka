@@ -205,7 +205,22 @@ export function Result({ result, mode }: { result: AnnualResult; mode: Mode }) {
 
   // Ve výpočtu z čisté je čistá mzda zadaná, třetím číslem je proto hrubá.
   const third =
-    mode === 'z-hrube' ? (
+    mode === 'z-hrube' && withSpending ? (
+      <Figure
+        label="Získaná hodnota"
+        value={m.net - spendTax}
+        size="m"
+        formula="Hodnota, kterou z práce skutečně získáte: čistá mzda po odečtení daní z útraty. Stejně vyjde celkové náklady zaměstnavatele minus celkové odvody státu."
+        substitution={sum(
+          [
+            { value: m.employerCost, sign: '+' },
+            // Při doplatku státu jsou odvody záporné – v dosazení se pak přičítají.
+            { value: Math.abs(toState), sign: toState < 0 ? '+' : '−' },
+          ],
+          m.net - spendTax,
+        )}
+      />
+    ) : mode === 'z-hrube' ? (
       <Figure
         label="Čistá mzda"
         value={m.net}

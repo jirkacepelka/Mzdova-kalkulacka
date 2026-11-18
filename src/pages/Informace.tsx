@@ -349,10 +349,53 @@ export function Informace() {
           <section aria-labelledby="soukromi">
             <h2 id="soukromi">Ochrana soukromí</h2>
             <p>
-              <strong>Zadané údaje neopustí váš prohlížeč.</strong> Celý výpočet probíhá u vás,
-              nikam se neodesílá ani neukládá. Kalkulačka nepoužívá cookies ani měřicí nástroje a
-              písmo načítá z vlastního serveru, ne od Googlu.
+              <strong>Zadané údaje neopustí váš prohlížeč.</strong> Celý výpočet probíhá u vás, mzdu
+              ani jiné zadané údaje nikam neodesíláme ani neukládáme. Kalkulačka nepoužívá cookies,
+              měřicí ani reklamní nástroje a písmo načítá z vlastního serveru.
             </p>
+            <p>
+              V úložišti vašeho prohlížeče (localStorage) si pamatujeme jen to, jestli jste skryli
+              vysvětlující text. Ukládá se to jen na vašem zařízení, slouží to výhradně k nastavení
+              vzhledu, o které jste sami požádali, a kdykoli to smažete vymazáním dat webu v
+              prohlížeči.
+            </p>
+
+            <h3>Provozní záznamy hostingu</h3>
+            <p>
+              Web běží na infrastruktuře společnosti Vercel Inc. (USA). Jako u každého webu se při
+              načtení stránky předává vaše IP adresa a technické údaje o požadavku (čas, adresa
+              stránky, typ prohlížeče). Vercel je v nezbytném rozsahu zpracovává v provozních
+              záznamech, aby web mohl doručit a chránit před útoky, a uchovává je jen po dobu nutnou
+              k tomuto účelu. Tyto údaje nespojujeme s vaší osobou a nepoužíváme je k žádnému jinému
+              účelu.
+            </p>
+            <ul>
+              <li>
+                <strong>Správce:</strong> Libertariánská strana Voluntia, IČ 23201703, kontakt{' '}
+                <a href="https://voluntia.cz/o-nas/#kontakt" target="_blank" rel="noopener noreferrer">
+                  voluntia.cz/o-nas
+                </a>
+                .
+              </li>
+              <li>
+                <strong>Právní základ:</strong> oprávněný zájem na bezpečném provozu webu (čl. 6
+                odst. 1 písm. f) GDPR).
+              </li>
+              <li>
+                <strong>Zpracovatel a předání do USA:</strong> Vercel Inc. na základě smlouvy o
+                zpracování osobních údajů; předání do USA je kryto rámcem EU–USA pro ochranu údajů
+                (Data Privacy Framework, čl. 45 GDPR) a standardními smluvními doložkami.
+              </li>
+              <li>
+                <strong>Vaše práva:</strong> máte právo na přístup k údajům, jejich opravu či výmaz,
+                omezení zpracování a vznést námitku proti zpracování (čl. 15–21 GDPR). Stížnost můžete
+                podat u Úřadu pro ochranu osobních údajů (
+                <a href="https://uoou.gov.cz" target="_blank" rel="noopener noreferrer">
+                  uoou.gov.cz
+                </a>
+                ).
+              </li>
+            </ul>
           </section>
 
           <p className="doc-back doc-back-bottom">

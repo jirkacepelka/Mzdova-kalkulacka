@@ -118,8 +118,7 @@ button {
 
 .intro-lead {
   margin: var(--mezera-12) 0 0;
-  font-size: var(--pismo-text);
-  font-weight: 500;
+  font-size: var(--pismo-maly);
   color: var(--text-jemny);
   text-wrap: pretty;
 }
@@ -132,6 +131,11 @@ button {
 .info p {
   margin: 0 0 var(--mezera-16);
   text-wrap: pretty;
+}
+
+/* Obecný okraj odstavců by jinak úvodu sebral mezeru pod nadpisem. */
+.info .intro-lead {
+  margin-top: var(--mezera-12);
 }
 
 .info-heading {
@@ -904,10 +908,11 @@ button {
   max-width: 280px;
 }
 
+/* Na desktopu značka vlevo, sloupce odkazů zarovnané doprava. */
 @media (min-width: 992px) {
   .footer-grid {
-    grid-template-columns: 1.5fr repeat(2, 1fr) 1fr;
-    gap: var(--mezera-48);
+    grid-template-columns: 1fr auto auto;
+    gap: var(--mezera-48) var(--mezera-64);
   }
 
   .footer-brand {

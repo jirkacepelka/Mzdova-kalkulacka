@@ -102,7 +102,7 @@ export function Footer() {
 
         <div className="footer-bottom">
           <div className="footer-bottom-left">
-            <span>© {new Date().getFullYear()} Libertariánská strana Voluntia</span>
+            <span>© {new Date().getFullYear()} Libertariánská strana Voluntia · IČ 23201703</span>
             <a href="/informace">Informace a metodika</a>
           </div>
           <ul className="footer-socials">
